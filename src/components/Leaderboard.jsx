@@ -6,10 +6,6 @@ export default function Leaderboard({ onBack }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadLeaderboard();
-  }, []);
-
   const loadLeaderboard = async () => {
     setLoading(true);
     setError('');
@@ -24,6 +20,11 @@ export default function Leaderboard({ onBack }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react/set-state-in-effect
+    loadLeaderboard();
+  }, []);
 
   const renderStars = (score) => {
     const total = 5;

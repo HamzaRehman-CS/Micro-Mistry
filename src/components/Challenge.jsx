@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import allImagesData from '../data/images.json';
 
@@ -17,37 +17,56 @@ export default function Challenge({ onComplete, onCancel }) {
   const [lifelines, setLifelines] = useState({ fiftyFifty: true, hint: true, plusTime: true });
   const [activeHint, setActiveHint] = useState(null);
   const [hiddenOptions, setHiddenOptions] = useState([]);
+  const [isLocked, setIsLocked] = useState(false);
+  
   const timerRef = useRef(null);
   const deadlineRef = useRef(0);
   const advanceRef = useRef(null);
   const lockedRef = useRef(false);
   const currentImg = imagesData[currentIndex];
 
-  const handleAnswer = (selectedOption) => {
+  const handleAnswer = useCallback((selectedOption) => {
     if (lockedRef.current) return;
     lockedRef.current = true;
+    setIsLocked(true);
     clearInterval(timerRef.current);
-    const isCorrect = selectedOption === currentImg.correctAnswer;
+    const isCorrect = selectedOption === imagesData[currentIndex].correctAnswer;
     const nextScore = score + Number(isCorrect);
     if (isCorrect) setScore(nextScore);
     
     advanceRef.current = setTimeout(() => {
-      if (currentIndex + 1 < imagesData.length) setCurrentIndex(currentIndex + 1);
+      if (currentIndex + 1 < imagesData.length) {
+         setCurrentIndex(currentIndex + 1);
+         lockedRef.current = false;
+         setIsLocked(false);
+         // Reset state for next question without triggering effect warnings
+         setTimeLeft(30);
+         setActiveHint(null);
+         setHiddenOptions([]);
+         deadlineRef.current = Date.now() + 30000;
+         timerRef.current = setInterval(() => setTimeLeft(Math.max(0, Math.ceil((deadlineRef.current - Date.now()) / 1000))), 100);
+      }
       else onComplete(nextScore);
     }, 500);
-  };
+  }, [currentIndex, imagesData, score, onComplete]);
+
+  // Use a ref for the answer handler to use in the timer effect without deps issues
+  const handleAnswerRef = useRef(handleAnswer);
+  useEffect(() => { handleAnswerRef.current = handleAnswer; }, [handleAnswer]);
 
   useEffect(() => {
     lockedRef.current = false;
-    setTimeLeft(30);
-    setActiveHint(null);
-    setHiddenOptions([]);
     deadlineRef.current = Date.now() + 30000;
-    timerRef.current = setInterval(() => setTimeLeft(Math.max(0, Math.ceil((deadlineRef.current - Date.now()) / 1000))), 100);
+    timerRef.current = setInterval(() => {
+      const remaining = Math.max(0, Math.ceil((deadlineRef.current - Date.now()) / 1000));
+      setTimeLeft(remaining);
+      if (remaining === 0) {
+        clearInterval(timerRef.current);
+        handleAnswerRef.current(null);
+      }
+    }, 100);
     return () => { clearInterval(timerRef.current); clearTimeout(advanceRef.current); };
-  }, [currentIndex]);
-
-  useEffect(() => { if (timeLeft === 0) handleAnswer(null); }, [timeLeft]);
+  }, []); // Run only on mount
 
   const cancel = () => {
     if (window.confirm('Leave this attempt? Your answers will not be saved.')) {
@@ -56,21 +75,23 @@ export default function Challenge({ onComplete, onCancel }) {
       onCancel();
     }
   };
+  
   const useFiftyFifty = () => {
-    if (!lifelines.fiftyFifty || lockedRef.current) return;
+    if (!lifelines.fiftyFifty || isLocked) return;
     setLifelines((value) => ({ ...value, fiftyFifty: false }));
     setHiddenOptions([...currentImg.options.filter((option) => option !== currentImg.correctAnswer)].sort(() => Math.random() - .5).slice(0, 2));
   };
+  
   const useHint = () => {
-    if (!lifelines.hint || lockedRef.current) return;
+    if (!lifelines.hint || isLocked) return;
     setLifelines((value) => ({ ...value, hint: false }));
     setActiveHint(currentImg.hint);
   };
+  
   const usePlusTime = () => {
-    if (!lifelines.plusTime || lockedRef.current) return;
+    if (!lifelines.plusTime || isLocked) return;
     setLifelines((value) => ({ ...value, plusTime: false }));
     deadlineRef.current += 10000;
-    setTimeLeft(Math.max(0, Math.ceil((deadlineRef.current - Date.now()) / 1000)));
   };
 
   return <main className="micro-challenge">
@@ -81,9 +102,9 @@ export default function Challenge({ onComplete, onCancel }) {
       <motion.div key={currentImg.id} className="macro-image-frame" initial={{ rotate: -4, opacity: 0 }} animate={{ rotate: -2, opacity: 1 }}><img src={currentImg.imageUrl} alt={`Illustrated mystery specimen ${currentIndex + 1}`}/><span className="micro-photo-tag">ILLUSTRATED EVIDENCE #{currentIndex + 1}</span></motion.div>
       <section className="micro-question"><p className="micro-kicker">OBSERVE CLOSELY. GUESS WILDLY.</p><h2>What on earth <em>is this?</em></h2><p className="micro-question-note">Pick your best guess before the clock rats you out.</p>
         {activeHint && <div className="micro-hint"><strong>CLASSIFIED HINT:</strong> {activeHint}</div>}
-        <div className="micro-options">{currentImg.options.map((option, index) => <button key={option} className="micro-option" disabled={hiddenOptions.includes(option) || lockedRef.current} onClick={() => handleAnswer(option)}><span>{String.fromCharCode(65 + index)}</span>{option}</button>)}</div>
+        <div className="micro-options">{currentImg.options.map((option, index) => <button key={option} className="micro-option" disabled={hiddenOptions.includes(option) || isLocked} onClick={() => handleAnswer(option)}><span>{String.fromCharCode(65 + index)}</span>{option}</button>)}</div>
       </section>
     </div>
-    <div className="micro-lifelines"><strong>NEED A HAND?</strong><button onClick={useFiftyFifty} disabled={!lifelines.fiftyFifty || lockedRef.current}>✂ 50 / 50</button><button onClick={useHint} disabled={!lifelines.hint || lockedRef.current}>✳ HINT</button><button onClick={usePlusTime} disabled={!lifelines.plusTime || lockedRef.current}>⏱ +10 SEC</button></div>
+    <div className="micro-lifelines"><strong>NEED A HAND?</strong><button onClick={useFiftyFifty} disabled={!lifelines.fiftyFifty || isLocked}>✂ 50 / 50</button><button onClick={useHint} disabled={!lifelines.hint || isLocked}>✳ HINT</button><button onClick={usePlusTime} disabled={!lifelines.plusTime || isLocked}>⏱ +10 SEC</button></div>
   </main>;
 }

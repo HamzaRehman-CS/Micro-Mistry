@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Result({ score, player, attemptId, onReset, onViewLeaderboard }) {
@@ -8,7 +8,7 @@ export default function Result({ score, player, attemptId, onReset, onViewLeader
   const [saveStatus, setSaveStatus] = useState('saving');
   const [saveError, setSaveError] = useState('');
 
-  const save = async () => {
+  const save = useCallback(async () => {
     setSaveStatus('saving');
     setSaveError('');
     try {
@@ -24,14 +24,14 @@ export default function Result({ score, player, attemptId, onReset, onViewLeader
       setSaveStatus('error');
       setSaveError(error.message);
     }
-  };
+  }, [attemptId, player, safeScore]);
 
   useEffect(() => {
     if (!hasSaved.current && attemptId && player?.name?.trim() && player?.universityId?.trim() && typeof score === 'number') {
       hasSaved.current = true;
       save();
     }
-  }, [attemptId, player, score]);
+  }, [attemptId, player, score, save]);
 
   return (
     <div className="flex-col flex-center h-full p-8 text-center gap-8">
