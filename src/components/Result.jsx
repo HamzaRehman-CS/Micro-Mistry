@@ -17,9 +17,19 @@ export default function Result({ score, player, attemptId, onReset, onViewLeader
         body: JSON.stringify({ attemptId, name: player.name, universityId: player.universityId,
           number: player.number, score: safeScore, correct: safeScore, wrong: 5 - safeScore, attempted: 5 }),
       });
-      const data = await response.json();
-      if (!response.ok || !data.saved) throw new Error(data.error || 'Could not update the Desktop Excel file.');
-      setSaveStatus('saved');
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        if (!response.ok || !data.saved) throw new Error(data.error || 'Could not update the Desktop Excel file.');
+        setSaveStatus('saved');
+      } else {
+        if (!response.ok) {
+          console.warn('API /api/save not available. Running in preview mode.');
+          setSaveStatus('preview');
+        } else {
+          throw new Error('Unexpected non-JSON response from server.');
+        }
+      }
     } catch (error) {
       setSaveStatus('error');
       setSaveError(error.message);
@@ -84,12 +94,16 @@ export default function Result({ score, player, attemptId, onReset, onViewLeader
       )}
 
       <div className="flex-col gap-4 w-full mt-8" style={{ maxWidth: '400px' }}>
-        <p className={`save-status ${saveStatus}`} role="status">{saveStatus === 'saved' ? 'Saved to the Desktop Excel workbook.' : saveStatus === 'saving' ? 'Saving this attempt…' : saveError}</p>
+        <p className={`save-status ${saveStatus}`} role="status">
+          {saveStatus === 'saved' ? 'Saved to the Desktop Excel workbook.' : 
+           saveStatus === 'preview' ? 'Preview Mode: Results not saved on web.' : 
+           saveStatus === 'saving' ? 'Saving this attempt…' : saveError}
+        </p>
         {saveStatus === 'error' && <button className="btn w-full" onClick={save}>RETRY SAVE</button>}
-        <button className="btn btn-primary w-full" onClick={onReset} disabled={saveStatus !== 'saved'}>
+        <button className="btn btn-primary w-full" onClick={onReset} disabled={saveStatus !== 'saved' && saveStatus !== 'preview'}>
           NEXT PARTICIPANT
         </button>
-        <button className="btn w-full" onClick={onViewLeaderboard} disabled={saveStatus !== 'saved'}>
+        <button className="btn w-full" onClick={onViewLeaderboard} disabled={saveStatus !== 'saved' && saveStatus !== 'preview'}>
           VIEW LEADERBOARD
         </button>
       </div>

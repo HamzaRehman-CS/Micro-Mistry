@@ -11,6 +11,10 @@ export default function Leaderboard({ onBack }) {
     setError('');
     try {
       const response = await fetch('/api/leaderboard', { cache: 'no-store' });
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error('Preview Mode: Local leaderboard is unavailable on the web.');
+      }
       if (!response.ok) throw new Error('The local leaderboard server is unavailable.');
       const data = await response.json();
       setLeaders(data.entries);
