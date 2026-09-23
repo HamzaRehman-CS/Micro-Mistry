@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <radialGradient id="field"><stop stop-color="#f3d2eb"/><stop offset=".7" stop-color="#b889b5"/><stop offset="1" stop-color="#593d7a"/></radialGradient>
+    <pattern id="cells" width="180" height="99" patternUnits="userSpaceOnUse" patternTransform="rotate(-11)"><path d="M0 0Q84 12 180 0V99Q90 90 0 99Z" fill="#f8d7e6" fill-opacity=".38" stroke="#733f79" stroke-width="8"/><path d="M13 15Q90 21 167 13V84Q95 77 13 85Z" fill="none" stroke="#fff0f5" stroke-width="3" opacity=".7"/><ellipse cx="90" cy="49" rx="18" ry="12" fill="#865691" fill-opacity=".75"/></pattern>
+    <radialGradient id="vignette"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".53"/></radialGradient>
+  </defs>
+  <rect width="700" height="700" fill="url(#field)"/><rect width="900" height="900" x="-100" y="-100" fill="url(#cells)"/>
+  <path d="M-20 555Q242 527 488 575T760 577" fill="none" stroke="#602c69" stroke-width="9" opacity=".38"/>
+  <g fill="#fff" opacity=".28"><circle cx="88" cy="76" r="9"/><circle cx="596" cy="118" r="5"/><circle cx="590" cy="610" r="8"/></g>
+  <rect width="700" height="700" fill="url(#vignette)"/>
+</svg>

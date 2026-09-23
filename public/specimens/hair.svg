@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <radialGradient id="field"><stop stop-color="#b1a5cf"/><stop offset=".7" stop-color="#645c8b"/><stop offset="1" stop-color="#241f45"/></radialGradient>
+    <linearGradient id="shaft"><stop stop-color="#342037"/><stop offset=".18" stop-color="#a66070"/><stop offset=".42" stop-color="#e5a9a4"/><stop offset=".7" stop-color="#71394e"/><stop offset="1" stop-color="#281b33"/></linearGradient>
+    <filter id="texture"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="4" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+    <radialGradient id="vignette"><stop offset=".48" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".58"/></radialGradient>
+  </defs>
+  <rect width="700" height="700" fill="url(#field)"/>
+  <g opacity=".22" fill="#f3d9dc"><circle cx="105" cy="118" r="10"/><circle cx="565" cy="102" r="5"/><circle cx="587" cy="501" r="9"/><circle cx="84" cy="541" r="7"/><circle cx="214" cy="376" r="4"/><circle cx="456" cy="620" r="6"/></g>
+  <g transform="rotate(-30 350 350)" filter="url(#texture)">
+    <path d="M250-100 C291 99 268 201 290 345 S307 592 269 800" fill="none" stroke="#2c2139" stroke-width="160" stroke-linecap="round"/>
+    <path d="M250-100 C291 99 268 201 290 345 S307 592 269 800" fill="none" stroke="url(#shaft)" stroke-width="143" stroke-linecap="round"/>
+    <path d="M234-100 C275 99 252 201 274 345 S291 592 253 800" fill="none" stroke="#f3c2bd" stroke-width="13" opacity=".48"/>
+    <path d="M310-100 C351 99 328 201 350 345 S367 592 329 800" fill="none" stroke="#32233b" stroke-width="10" opacity=".5"/>
+    <g fill="none" stroke="#412a41" stroke-width="4" opacity=".35"><path d="M172 80q78 25 150 2M181 132q72 24 147 1M194 188q72 22 144-6M204 249q75 16 144-7M215 313q75 17 142-7M222 379q78 17 141-7M228 447q74 12 137-7M232 511q74 12 129-8M230 576q70 9 125-12M224 638q67 9 123-13"/></g>
+    <path d="M536-100 C507 153 516 287 541 450 S551 682 520 800" fill="none" stroke="#2c233b" stroke-width="60"/>
+    <path d="M536-100 C507 153 516 287 541 450 S551 682 520 800" fill="none" stroke="#c6868e" stroke-width="49"/>
+    <path d="M525-100 C496 153 505 287 530 450 S540 682 509 800" fill="none" stroke="#f4bdaf" stroke-width="5" opacity=".6"/>
+  </g>
+  <rect width="700" height="700" fill="url(#vignette)"/>
+</svg>

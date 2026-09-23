@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <radialGradient id="field"><stop stop-color="#718fa3"/><stop offset=".7" stop-color="#456679"/><stop offset="1" stop-color="#1a354b"/></radialGradient>
+    <linearGradient id="front" x2=".8" y2="1"><stop stop-color="#fff9e8"/><stop offset=".55" stop-color="#bed8dc"/><stop offset="1" stop-color="#7b9db5"/></linearGradient>
+    <radialGradient id="vignette"><stop offset=".46" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient>
+    <g id="cube"><path d="M0 32 125 0 208 54 83 88Z" fill="#fffbee" stroke="#d8ecf3" stroke-width="5"/><path d="M0 32 83 88 83 218 0 158Z" fill="#8caec0" stroke="#daebec" stroke-width="5"/><path d="M83 88 208 54 208 181 83 218Z" fill="url(#front)" stroke="#f4f4df" stroke-width="5"/><path d="M15 49 83 96 196 66M94 105V202" fill="none" stroke="#fff" stroke-width="3" opacity=".6"/></g>
+  </defs>
+  <rect width="700" height="700" fill="url(#field)"/>
+  <g opacity=".34" fill="#dcebf2"><circle cx="79" cy="151" r="7"/><circle cx="582" cy="107" r="5"/><circle cx="94" cy="571" r="10"/><circle cx="621" cy="520" r="7"/></g>
+  <use href="#cube" transform="translate(86 107) rotate(-12 104 109) scale(1.25)"/><use href="#cube" transform="translate(360 72) rotate(15 104 109) scale(.75)"/><use href="#cube" transform="translate(318 325) rotate(-5 104 109) scale(1.45)"/><use href="#cube" transform="translate(57 440) rotate(23 104 109) scale(.68)"/><use href="#cube" transform="translate(546 463) rotate(-24 104 109) scale(.46)"/>
+  <rect width="700" height="700" fill="url(#vignette)"/>
+</svg>
