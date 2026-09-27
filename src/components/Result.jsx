@@ -88,16 +88,16 @@ export default function Result({ score, player, attemptId, onReset, onViewLeader
       )}
 
       <div className="flex-col gap-4 w-full mt-8" style={{ maxWidth: '400px' }}>
-        <p className={`save-status ${saveStatus}`} role="status">
-          {saveStatus === 'saved' ? '✓ Recorded to live Supabase database!' : 
-           saveStatus === 'preview' ? 'Preview Mode: Results not saved on web.' : 
-           saveStatus === 'saving' ? 'Recording this attempt…' : saveError}
-        </p>
-        {saveStatus === 'error' && <button className="btn w-full" onClick={save}>RETRY SAVE</button>}
-        <button className="btn btn-primary w-full" onClick={onReset} disabled={saveStatus !== 'saved' && saveStatus !== 'preview'}>
+        {saveStatus === 'error' && (
+          <div className="flex-col gap-2">
+            <p style={{ color: '#d9534f', fontSize: '0.85rem' }}>{saveError || 'Could not save record.'}</p>
+            <button className="btn w-full" onClick={save}>RETRY SAVE</button>
+          </div>
+        )}
+        <button className="btn btn-primary w-full" onClick={onReset}>
           NEXT PARTICIPANT
         </button>
-        <button className="btn w-full" onClick={onViewLeaderboard} disabled={saveStatus !== 'saved' && saveStatus !== 'preview'}>
+        <button className="btn w-full" onClick={onViewLeaderboard}>
           VIEW LEADERBOARD
         </button>
       </div>
