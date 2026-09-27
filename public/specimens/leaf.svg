@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <radialGradient id="field"><stop stop-color="#afdf80"/><stop offset=".7" stop-color="#5da875"/><stop offset="1" stop-color="#174f5a"/></radialGradient>
+    <pattern id="cells" width="115" height="100" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><path d="M0 17Q22-7 57 12Q92-12 115 16V73Q93 107 57 91Q24 110 0 72Z" fill="#b9e879" fill-opacity=".2" stroke="#28774b" stroke-width="8"/><path d="M8 23Q29 3 56 21Q88 1 107 23V68Q89 95 57 82Q27 96 8 68Z" fill="none" stroke="#e4f4a2" stroke-opacity=".45" stroke-width="3"/></pattern>
+    <radialGradient id="vignette"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></radialGradient>
+    <g id="stoma"><ellipse rx="52" ry="100" fill="#124f52" stroke="#c6e97b" stroke-width="12"/><path d="M-4-82C-61-44-55 45-5 82C-24 45-30-42-4-82ZM4-82C61-44 55 45 5 82C24 45 30-42 4-82Z" fill="#82cd6b" stroke="#e1efa2" stroke-width="5"/><ellipse rx="10" ry="70" fill="#103a48"/></g>
+  </defs>
+  <rect width="700" height="700" fill="url(#field)"/><rect width="700" height="700" fill="url(#cells)"/>
+  <use href="#stoma" transform="translate(185 212) rotate(-24)"/><use href="#stoma" transform="translate(482 374) rotate(28) scale(1.18)"/><use href="#stoma" transform="translate(224 563) rotate(16) scale(.82)"/>
+  <g fill="#eff9a2" opacity=".46"><circle cx="355" cy="130" r="7"/><circle cx="605" cy="213" r="11"/><circle cx="84" cy="416" r="9"/><circle cx="407" cy="596" r="6"/></g>
+  <rect width="700" height="700" fill="url(#vignette)"/>
+</svg>

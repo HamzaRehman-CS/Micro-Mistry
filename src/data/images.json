@@ -1,0 +1,496 @@
+[
+  {
+    "id": 1,
+    "imageUrl": "/images/case01.jpg",
+    "correctAnswer": "Toothbrush bristles",
+    "options": [
+      "Cotton fibers",
+      "Toothbrush bristles",
+      "Human hair",
+      "Wool fibers"
+    ],
+    "hint": "You use these every day to clean your teeth.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 2,
+    "imageUrl": "/images/case02.jpg",
+    "correctAnswer": "Dust mite",
+    "options": [
+      "Dust mite",
+      "Human cheek cells",
+      "Bacteria",
+      "Flea"
+    ],
+    "hint": "Found in bedding.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 3,
+    "imageUrl": "/images/case03.jpg",
+    "correctAnswer": "Hair",
+    "options": [
+      "Hair",
+      "Paramecium",
+      "Fiber",
+      "Bacteria"
+    ],
+    "hint": "Grows naturally from follicles.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 4,
+    "imageUrl": "/images/case04.jpg",
+    "correctAnswer": "Table salt crystals",
+    "options": [
+      "Sugar crystals",
+      "Starch granules",
+      "Table salt crystals",
+      "Soap crystals"
+    ],
+    "hint": "A kitchen ingredient usually added to food for flavour.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 5,
+    "imageUrl": "/images/case05.jpg",
+    "correctAnswer": "Pencil graphite",
+    "options": [
+      "Charcoal",
+      "Pencil graphite",
+      "Chalk",
+      "Plastic"
+    ],
+    "hint": "Use to write on paper.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 6,
+    "imageUrl": "/images/case06.jpg",
+    "correctAnswer": "Eraser",
+    "options": [
+      "Soap",
+      "Grains",
+      "Eraser",
+      "Rubber"
+    ],
+    "hint": "Quietly remove what was left behind.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 7,
+    "imageUrl": "/images/case07.jpg",
+    "correctAnswer": "Tape adhesive",
+    "options": [
+      "Glass surface",
+      "Tape adhesive",
+      "Paper fibers",
+      "Plastic film"
+    ],
+    "hint": "A sticky thing used to attach a thing to surface.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 8,
+    "imageUrl": "/images/case08.jpg",
+    "correctAnswer": "Sugar crystals",
+    "options": [
+      "Sugar crystals",
+      "Potato starch",
+      "Salt crystals",
+      "Pollen grains"
+    ],
+    "hint": "A kitchen ingredient used to make food and drinks sweet.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 9,
+    "imageUrl": "/images/case09.jpg",
+    "correctAnswer": "Paper fibers",
+    "options": [
+      "Paper fibers",
+      "Muscle cell",
+      "Neurons",
+      "Cotton fibers"
+    ],
+    "hint": "Tiny strands, part of a material.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 10,
+    "imageUrl": "/images/case10.jpg",
+    "correctAnswer": "Matchstick head",
+    "options": [
+      "Matchstick head",
+      "Red tip",
+      "Graphite",
+      "Eraser"
+    ],
+    "hint": "A lil friction and a boom.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 11,
+    "imageUrl": "/images/case11.jpg",
+    "correctAnswer": "Cotton bud",
+    "options": [
+      "Wool yarn",
+      "Cotton bud",
+      "Fiber",
+      "Cotton fiber"
+    ],
+    "hint": "Softness is my purpose.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 12,
+    "imageUrl": "/images/case12.jpg",
+    "correctAnswer": "Tablet coating",
+    "options": [
+      "Sheet",
+      "Tablet coating",
+      "Crystal",
+      "Cork"
+    ],
+    "hint": "An outer smooth surface.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 13,
+    "imageUrl": "/images/case13.jpg",
+    "correctAnswer": "Rubber band",
+    "options": [
+      "Rubber band",
+      "Glue",
+      "Sponge",
+      "Slime"
+    ],
+    "hint": "I can never deform.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 14,
+    "imageUrl": "/images/case14.jpg",
+    "correctAnswer": "Coffee grounds",
+    "options": [
+      "Tea leaves",
+      "Coffee grounds",
+      "Onion cells",
+      "Cocoa powder"
+    ],
+    "hint": "A roasted form for drinks.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 15,
+    "imageUrl": "/images/case15.jpg",
+    "correctAnswer": "Keyboard key",
+    "options": [
+      "Alphabet",
+      "Keyboard key",
+      "Black key",
+      "A"
+    ],
+    "hint": "One press and see a magic.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 16,
+    "imageUrl": "/images/case16.jpg",
+    "correctAnswer": "Fabric fibers",
+    "options": [
+      "Human hair",
+      "Fabric fibers",
+      "Plastic fibers",
+      "Wool"
+    ],
+    "hint": "Look at the interwoven threads that make up clothing.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 17,
+    "imageUrl": "/images/case17.jpg",
+    "correctAnswer": "Soap bubbles",
+    "options": [
+      "Bacteria",
+      "Water crystals",
+      "Oil droplets",
+      "Soap bubbles"
+    ],
+    "hint": "Can be blown into air.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 18,
+    "imageUrl": "/images/case18.jpg",
+    "correctAnswer": "Candle wax",
+    "options": [
+      "Candle wax",
+      "Plastic film",
+      "Gum",
+      "Sugar"
+    ],
+    "hint": "Material form by melting.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 19,
+    "imageUrl": "/images/case19.jpg",
+    "correctAnswer": "Turmeric powder",
+    "options": [
+      "Sand",
+      "Turmeric powder",
+      "Yellow wool",
+      "Yellow powder"
+    ],
+    "hint": "A little of me can leave a very noticeable trace.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 20,
+    "imageUrl": "/images/case20.jpg",
+    "correctAnswer": "Zipper teeth",
+    "options": [
+      "Pouch",
+      "Clippers",
+      "Bag",
+      "Zipper teeth"
+    ],
+    "hint": "Individually small, but together they lock two sides.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 21,
+    "imageUrl": "/images/case21.jpg",
+    "correctAnswer": "Plastic bottle cap",
+    "options": [
+      "Rubber",
+      "Soap surface",
+      "Plastic bottle cap",
+      "Metal ring"
+    ],
+    "hint": "Twist to open.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 22,
+    "imageUrl": "/images/case22.jpg",
+    "correctAnswer": "Cork",
+    "options": [
+      "Cork",
+      "Cardboard",
+      "Starch granules",
+      "Bread"
+    ],
+    "hint": "Use me for sealing.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 23,
+    "imageUrl": "/images/case23.jpg",
+    "correctAnswer": "Cardboard",
+    "options": [
+      "Loops",
+      "Table close up",
+      "Cardboard",
+      "Wood"
+    ],
+    "hint": "My layers give me strength.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 24,
+    "imageUrl": "/images/case24.jpg",
+    "correctAnswer": "Leaf",
+    "options": [
+      "Spirogyra",
+      "Elodea",
+      "Mold",
+      "Leaf"
+    ],
+    "hint": "Have network of veins.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 25,
+    "imageUrl": "/images/case25.jpg",
+    "correctAnswer": "Chewing gum",
+    "options": [
+      "Candle wax",
+      "Chewing gum",
+      "Rubber",
+      "Soap"
+    ],
+    "hint": "A soft and stretchy, flavoured thing.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 26,
+    "imageUrl": "/images/case26.jpg",
+    "correctAnswer": "Sponge",
+    "options": [
+      "Cork",
+      "Bacteria",
+      "Sponge",
+      "Mold"
+    ],
+    "hint": "My empty spaces are just as important as my material.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 27,
+    "imageUrl": "/images/case27.jpg",
+    "correctAnswer": "Skin",
+    "options": [
+      "Fabric",
+      "Wood",
+      "Rubber",
+      "Skin"
+    ],
+    "hint": "I'm a first boundary with the outside world.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 28,
+    "imageUrl": "/images/case28.jpg",
+    "correctAnswer": "Wool yarn",
+    "options": [
+      "Wool yarn",
+      "Hyphae",
+      "Cotton",
+      "Fibers"
+    ],
+    "hint": "Used in knitted items.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 29,
+    "imageUrl": "/images/case29.jpg",
+    "correctAnswer": "Ball point pen tip",
+    "options": [
+      "Pencil graphite",
+      "Blue paint",
+      "Marker tip",
+      "Ball point pen tip"
+    ],
+    "hint": "Think about what comes out when you try to write.",
+    "difficulty": "easy"
+  },
+  {
+    "id": 30,
+    "imageUrl": "/images/case30.jpg",
+    "correctAnswer": "Clip",
+    "options": [
+      "Needle",
+      "Clip",
+      "Zipper tooth",
+      "Wire"
+    ],
+    "hint": "Used on papers.",
+    "difficulty": "hard"
+  },
+  {
+    "id": 31,
+    "imageUrl": "/images/case31.jpg",
+    "correctAnswer": "Vinyl record grooves",
+    "options": [
+      "Vinyl record grooves",
+      "Fingerprint ridges",
+      "Wood grain",
+      "Mushroom gills"
+    ],
+    "hint": "It plays music when spun with a needle.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 32,
+    "imageUrl": "/images/case32.jpg",
+    "correctAnswer": "Velcro hooks",
+    "options": [
+      "Synthetic fibers",
+      "Velcro hooks",
+      "Plant thorns",
+      "Spider fangs"
+    ],
+    "hint": "Used to fasten two pieces of fabric together.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 33,
+    "imageUrl": "/images/case33.jpg",
+    "correctAnswer": "Mosquito eye",
+    "options": [
+      "Fly eye",
+      "Mosquito eye",
+      "Microphone mesh",
+      "Honeycomb"
+    ],
+    "hint": "A compound structure belonging to a blood-sucking insect.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 34,
+    "imageUrl": "/images/case34.jpg",
+    "correctAnswer": "Snowflake crystal",
+    "options": [
+      "Ice shard",
+      "Quartz crystal",
+      "Salt crystal",
+      "Snowflake crystal"
+    ],
+    "hint": "A unique icy formation that falls from the sky.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 35,
+    "imageUrl": "/images/case35.jpg",
+    "correctAnswer": "Butterfly wing scales",
+    "options": [
+      "Fish scales",
+      "Butterfly wing scales",
+      "Bird feathers",
+      "Roof shingles"
+    ],
+    "hint": "These overlapping structures give a flying insect its colorful patterns.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 36,
+    "imageUrl": "/images/case36.jpg",
+    "correctAnswer": "Human sweat pore",
+    "options": [
+      "Volcanic crater",
+      "Sponge pore",
+      "Human sweat pore",
+      "Plant stomata"
+    ],
+    "hint": "An opening on the skin that helps regulate temperature.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 37,
+    "imageUrl": "/images/case37.jpg",
+    "correctAnswer": "Wound guitar string",
+    "options": [
+      "Wound guitar string",
+      "Metal spring",
+      "Coiled wire",
+      "Threaded screw"
+    ],
+    "hint": "Produces sound when plucked on a musical instrument.",
+    "difficulty": "super_hard"
+  },
+  {
+    "id": 38,
+    "imageUrl": "/images/case38.jpg",
+    "correctAnswer": "Spider silk thread",
+    "options": [
+      "Cotton thread",
+      "Nylon string",
+      "Spider silk thread",
+      "Human hair"
+    ],
+    "hint": "An incredibly strong natural fiber spun by an arachnid.",
+    "difficulty": "super_hard"
+  }
+]

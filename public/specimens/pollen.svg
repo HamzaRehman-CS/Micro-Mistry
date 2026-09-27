@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <radialGradient id="field"><stop stop-color="#4e6b73"/><stop offset=".7" stop-color="#2b535c"/><stop offset="1" stop-color="#14333d"/></radialGradient>
+    <radialGradient id="grain"><stop stop-color="#ffe989"/><stop offset=".55" stop-color="#eeb858"/><stop offset=".86" stop-color="#b97040"/><stop offset="1" stop-color="#63392e"/></radialGradient>
+    <radialGradient id="vignette"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient>
+    <g id="pollen"><circle r="100" fill="url(#grain)" stroke="#f8cf7a" stroke-width="8"/><circle r="78" fill="none" stroke="#ffdf90" stroke-width="4" stroke-dasharray="5 11" opacity=".8"/><path d="M-70 0Q0-45 70 0M-59 44Q0 16 59 44M-54-48Q0-17 54-48" fill="none" stroke="#a86d37" stroke-width="7" opacity=".56"/><g fill="#fff0a1" opacity=".55"><circle cx="-25" cy="-55" r="8"/><circle cx="30" cy="-23" r="6"/><circle cx="-34" cy="20" r="5"/><circle cx="20" cy="52" r="8"/></g><g fill="#d49751"><circle cx="0" cy="-100" r="8"/><circle cx="82" cy="-59" r="9"/><circle cx="99" cy="15" r="8"/><circle cx="58" cy="84" r="9"/><circle cx="-32" cy="96" r="8"/><circle cx="-91" cy="43" r="9"/><circle cx="-85" cy="-51" r="8"/></g></g>
+  </defs>
+  <rect width="700" height="700" fill="url(#field)"/>
+  <g opacity=".28" fill="#ade6c7"><circle cx="183" cy="387" r="8"/><circle cx="525" cy="97" r="5"/><circle cx="79" cy="100" r="7"/><circle cx="577" cy="579" r="12"/></g>
+  <use href="#pollen" transform="translate(179 196) rotate(-16) scale(.85)"/><use href="#pollen" transform="translate(470 245) rotate(31) scale(1.18)"/><use href="#pollen" transform="translate(311 547) rotate(-36) scale(1.08)"/><use href="#pollen" transform="translate(638 554) scale(.48)"/>
+  <rect width="700" height="700" fill="url(#vignette)"/>
+</svg>
