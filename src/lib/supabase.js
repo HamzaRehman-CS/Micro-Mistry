@@ -64,49 +64,91 @@ export async function saveAttemptRecord({ attemptId, name, universityId, number,
 }
 
 /**
+ * Helper to fetch system markers with highest reliability.
+ * Calculates the absolute maximum (latest) cleared timestamp and set of deleted IDs.
+ */
+async function getSystemState(tableName) {
+  if (!supabase) return { deletedIds: new Set(), clearedTime: 0 };
+
+  try {
+    const { data } = await supabase
+      .from(tableName)
+      .select('name, university_id, created_at')
+      .like('name', '__%')
+      .order('created_at', { ascending: false });
+
+    const systemRows = Array.isArray(data) ? data : [];
+
+    const deletedIds = new Set(
+      systemRows
+        .filter(r => r.name === '__DELETED_ATTEMPT__')
+        .map(r => (r.university_id || '').toLowerCase().trim())
+        .filter(Boolean)
+    );
+
+    const clearRows = systemRows.filter(r => r.name === '__LEADERBOARD_CLEARED__');
+    const clearTimes = clearRows.map(r => new Date(r.created_at).getTime()).filter(t => !isNaN(t));
+    const clearedTime = clearTimes.length > 0 ? Math.max(...clearTimes) : 0;
+
+    return { deletedIds, clearedTime };
+  } catch (err) {
+    console.warn(`[${tableName}] Failed to fetch system metadata:`, err);
+    return { deletedIds: new Set(), clearedTime: 0 };
+  }
+}
+
+/**
  * Fetches Micro Mystery leaderboard entries.
- * Note: Never includes phone numbers on public screens to safeguard participant privacy.
+ * Guaranteed no repetitions (each participant appears once with their best score).
+ * Guaranteed synchronized with clear and delete actions.
  */
 export async function fetchLeaderboardEntries() {
   if (supabase) {
     try {
+      const { deletedIds, clearedTime } = await getSystemState('micro_mystery_attempts');
+
       const { data, error } = await supabase
         .from('micro_mystery_attempts')
         .select('id, name, university_id, score, correct, wrong, attempted, created_at')
         .order('score', { ascending: false })
         .order('correct', { ascending: false })
         .order('created_at', { ascending: true })
-        .limit(300);
+        .limit(500);
 
       if (!error && Array.isArray(data)) {
-        const systemRows = data.filter(row => row.name.startsWith('__'));
-        const deletedIds = new Set(
-          systemRows
-            .filter(r => r.name === '__DELETED_ATTEMPT__')
-            .map(r => (r.university_id || '').toLowerCase().trim())
-        );
-        const latestCleared = systemRows.find(r => r.name === '__LEADERBOARD_CLEARED__');
-        const clearedTime = latestCleared ? new Date(latestCleared.created_at).getTime() : 0;
-
-        const contenders = data.filter(row => {
-          if (row.name.startsWith('__')) return false;
-          const rowId = (row.university_id || '').toLowerCase().trim();
-          if (deletedIds.has(rowId)) return false;
-          if (clearedTime && new Date(row.created_at).getTime() <= clearedTime) return false;
+        const activeRows = data.filter(row => {
+          if (!row.name || row.name.startsWith('__')) return false;
+          const uId = (row.university_id || '').toLowerCase().trim();
+          const pName = (row.name || '').toLowerCase().trim();
+          if (deletedIds.has(uId) || deletedIds.has(pName)) return false;
+          const rowTime = new Date(row.created_at).getTime();
+          if (clearedTime > 0 && rowTime <= clearedTime) return false;
           return true;
         });
 
+        // Deduplicate by participant (single best attempt)
+        const seen = new Set();
+        const deduplicated = [];
+
+        for (const row of activeRows) {
+          const key = (row.university_id || '').toLowerCase().trim() || (row.name || '').toLowerCase().trim();
+          if (key && !seen.has(key)) {
+            seen.add(key);
+            deduplicated.push({
+              id: row.id,
+              name: row.name,
+              universityId: row.university_id,
+              score: row.score,
+              correct: row.correct,
+              wrong: row.wrong,
+              attempted: row.attempted,
+              timestamp: row.created_at
+            });
+          }
+        }
+
         return {
-          entries: contenders.map((row) => ({
-            id: row.id,
-            name: row.name,
-            universityId: row.university_id,
-            score: row.score,
-            correct: row.correct,
-            wrong: row.wrong,
-            attempted: row.attempted,
-            timestamp: row.created_at
-          }))
+          entries: deduplicated
         };
       }
     } catch (err) {
@@ -132,31 +174,34 @@ export async function searchAttempts(searchTerm) {
   if (!term) return [];
 
   try {
+    const { deletedIds, clearedTime } = await getSystemState('micro_mystery_attempts');
+
     const { data } = await supabase
       .from('micro_mystery_attempts')
       .select('id, name, university_id, phone, score, correct, wrong, attempted, created_at')
       .order('created_at', { ascending: false })
-      .limit(200);
+      .limit(300);
 
     if (!Array.isArray(data)) return [];
 
-    const systemRows = data.filter(row => row.name.startsWith('__'));
-    const deletedIds = new Set(
-      systemRows
-        .filter(r => r.name === '__DELETED_ATTEMPT__')
-        .map(r => (r.university_id || '').toLowerCase().trim())
-    );
-    const latestCleared = systemRows.find(r => r.name === '__LEADERBOARD_CLEARED__');
-    const clearedTime = latestCleared ? new Date(latestCleared.created_at).getTime() : 0;
-
-    return data.filter(row => {
-      if (row.name.startsWith('__')) return false;
-      const uId = (row.university_id || '').toLowerCase().trim();
-      const pName = (row.name || '').toLowerCase().trim();
-      if (deletedIds.has(uId)) return false;
-      if (clearedTime && new Date(row.created_at).getTime() <= clearedTime) return false;
-      return uId.includes(term) || pName.includes(term);
-    });
+    return data
+      .filter(row => {
+        if (!row.name || row.name.startsWith('__')) return false;
+        const uId = (row.university_id || '').toLowerCase().trim();
+        const pName = (row.name || '').toLowerCase().trim();
+        const matches = uId.includes(term) || pName.includes(term);
+        if (!matches) return false;
+        if (deletedIds.has(uId) || deletedIds.has(pName)) return false;
+        return true;
+      })
+      .map(row => {
+        const rowTime = new Date(row.created_at).getTime();
+        const isPriorToClear = clearedTime > 0 && rowTime <= clearedTime;
+        return {
+          ...row,
+          statusLabel: isPriorToClear ? 'Cleared (Archived)' : 'Active Contender'
+        };
+      });
   } catch (err) {
     console.warn('Error searching attempts:', err);
     return [];
@@ -177,10 +222,10 @@ export async function deleteAttemptByUniversityId(universityId) {
       .delete()
       .ilike('university_id', cleanId);
   } catch {
-    // ignore RLS restriction
+    // handled by tombstone
   }
 
-  // Also insert tombstone
+  // Insert tombstone
   const { error } = await supabase.from('micro_mystery_attempts').insert([
     {
       id: crypto.randomUUID(),
@@ -196,6 +241,9 @@ export async function deleteAttemptByUniversityId(universityId) {
   ]);
 
   if (error) throw new Error('Failed to delete attempt: ' + error.message);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('leaderboard-updated'));
+  }
 }
 
 /**
@@ -210,9 +258,10 @@ export async function clearAllLeaderboardAttempts() {
       .delete()
       .not('name', 'like', '__%');
   } catch {
-    // ignore RLS restriction
+    // handled by tombstone
   }
 
+  const nowIso = new Date().toISOString();
   const { error } = await supabase.from('micro_mystery_attempts').insert([
     {
       id: crypto.randomUUID(),
@@ -223,11 +272,14 @@ export async function clearAllLeaderboardAttempts() {
       correct: 0,
       wrong: 0,
       attempted: 0,
-      created_at: new Date().toISOString()
+      created_at: nowIso
     }
   ]);
 
   if (error) throw new Error('Failed to clear leaderboard: ' + error.message);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('leaderboard-updated'));
+  }
 }
 
 /**
@@ -238,28 +290,23 @@ export async function downloadAttemptsCsv() {
   let records = [];
 
   if (supabase) {
+    const { deletedIds, clearedTime } = await getSystemState('micro_mystery_attempts');
+
     const { data, error } = await supabase
       .from('micro_mystery_attempts')
       .select('*')
+      .not('name', 'like', '__%')
       .order('created_at', { ascending: false })
       .limit(1000);
 
     if (error) throw new Error(error.message);
 
-    const systemRows = (data || []).filter(r => r.name.startsWith('__'));
-    const deletedIds = new Set(
-      systemRows
-        .filter(r => r.name === '__DELETED_ATTEMPT__')
-        .map(r => (r.university_id || '').toLowerCase().trim())
-    );
-    const latestCleared = systemRows.find(r => r.name === '__LEADERBOARD_CLEARED__');
-    const clearedTime = latestCleared ? new Date(latestCleared.created_at).getTime() : 0;
-
     records = (data || []).filter(row => {
-      if (row.name.startsWith('__')) return false;
       const uId = (row.university_id || '').toLowerCase().trim();
-      if (deletedIds.has(uId)) return false;
-      if (clearedTime && new Date(row.created_at).getTime() <= clearedTime) return false;
+      const pName = (row.name || '').toLowerCase().trim();
+      if (deletedIds.has(uId) || deletedIds.has(pName)) return false;
+      const rowTime = new Date(row.created_at).getTime();
+      if (clearedTime > 0 && rowTime <= clearedTime) return false;
       return true;
     });
   } else {

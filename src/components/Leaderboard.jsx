@@ -54,6 +54,15 @@ export default function Leaderboard({ onBack }) {
 
   useEffect(() => {
     loadLeaderboard();
+    const handleUpdate = () => loadLeaderboard(true);
+    window.addEventListener('leaderboard-updated', handleUpdate);
+    const interval = setInterval(() => {
+      loadLeaderboard(true);
+    }, 8000);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('leaderboard-updated', handleUpdate);
+    };
   }, []);
 
   const handleDownload = async () => {
